@@ -8,8 +8,12 @@ import boto3
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 
-import uuid
+import uuid # don't use this, use datetime instead.
+from datetime import datetime
+
 import instance.config as config
+
+# ToDo -> create a list of known people that are only allowed to send MMS.
 
 # Your Account SID from twilio.com/console
 account_sid = config.account_sid
