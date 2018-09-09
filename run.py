@@ -9,7 +9,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 
 import uuid
-import config
+import instance.config as config
 
 # Your Account SID from twilio.com/console
 account_sid = config.account_sid
