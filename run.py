@@ -36,7 +36,7 @@ def download_files(media_files_list, _from):
 def upload_files():
     for root, dirs, files in os.walk(localDirectory):
         for filename in files:
-            s3.Bucket('testingshirley').upload_file(directory + filename, filename)
+            s3.Bucket('testingshirley').upload_file(localDirectory + filename, filename)
 
 def checkNumber(_from):
     with open('whois.json', 'r') as f:
