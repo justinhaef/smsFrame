@@ -20,7 +20,31 @@ client = Client(account_sid, auth_token)
 # AWS S3 Resource
 s3 = boto3.resource('s3')
 
+# directory
+localDirectory = '/tmp/'
+
 app = Flask(__name__)
+
+def download_files(media_files_list, _from):
+    for media in media_files_list:
+        url = media[0]
+        now = f"{datetime.now():%Y-%m-%d %H-%M-%S-%f}"
+        messageId = str(_from + "-" + now)
+        with open(localDirectory + messageId + '.png', 'wb') as f:
+            f.write(requests.get(url).content)
+
+def upload_files():
+    for root, dirs, files in os.walk(localDirectory):
+        for filename in files:
+            s3.Bucket('testingshirley').upload_file(directory + filename, filename)
+
+def checkNumber(_from):
+    with open('whois.json', 'r') as f:
+        knownNumbers = json.load(f)
+        if _from in knownNumbers["from"]:
+            return knownNumbers["from"][_from]
+        else:
+            return False
 
 @app.route('/sms', methods=['GET', 'POST'])
 def get_details():
@@ -52,28 +76,6 @@ def get_details():
         resp.message(message)
 
         return str(resp)
-
-def download_files(media_files_list, _from):
-    for media in media_files_list:
-        url = media[0]
-        now = f"{datetime.now():%Y-%m-%d %H-%M-%S-%f}"
-        messageId = str(_from + "-" + now)
-        with open('/Users/justinhaefner/Desktop/Shirley/' + messageId + '.png', 'wb') as f:
-            f.write(requests.get(url).content)
-
-def upload_files():
-    directory = '/Users/justinhaefner/Desktop/Shirley/'
-    for root, dirs, files in os.walk(directory):
-        for filename in files:
-            s3.Bucket('testingshirley').upload_file(directory + filename, filename)
-
-def checkNumber(_from):
-    with open('whois.json', 'r') as f:
-        knownNumbers = json.load(f)
-        if _from in knownNumbers["from"]:
-            return knownNumbers["from"][_from]
-        else:
-            return False
 
 if __name__ == "__main__":
     app.run()
