@@ -15,3 +15,5 @@ First we'll take what we've learned from this past [Twilio blog post](https://ww
 ## First AWS
 
 Our first task that we need to get done is setting up our AWS envoriment, this will involve creating an API Gateway, Two IAM Roles, S3 Bucket and a Lambda function.  There are many tutorials on how to create these but I like to use a Python application called Zappa to do this all quickly for me.  
+
+We need to have a signup page so that a user can login, specify the phone numbers and names of people that are allowed to send messages.  Then the AWS lambda funtion should add folders for each sender.  Then, we should create a DynamoDB table that will get meta data (possible facial recognition) and store that.  So if someone wanted to say "show me grandson x on date y" the system could figure that out. 
