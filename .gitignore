@@ -2,7 +2,7 @@
 .vscode/
 
 #Zappa Settings
-zappa_settings.json
+zappa_settings*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
