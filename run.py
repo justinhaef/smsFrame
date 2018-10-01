@@ -9,12 +9,10 @@ from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 
-import instance.config as config
-
 # Your Account SID from twilio.com/console
-account_sid = config.account_sid
+account_sid = os.environ.get('account_sid')
 # Your Auth Token from twilio.com/console
-auth_token  = config.auth_token
+auth_token  = os.environ.get('auth_token')
 client = Client(account_sid, auth_token)
 
 # AWS S3 Resource
@@ -59,6 +57,10 @@ def checkNumber(_from):
             return knownNumbers["from"][_from]
         else:
             return False
+
+@app.route('/')
+def healthCheck():
+    return 'Hello!\n'
 
 @app.route('/sms', methods=['GET', 'POST'])
 def get_details():
